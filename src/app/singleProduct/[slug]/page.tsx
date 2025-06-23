@@ -116,15 +116,52 @@
 // }
 
 
+// import { notFound } from 'next/navigation';
+// import ProductDetails from '@/app/components/productDetails/ProductDetails';
+// import { Product } from '../../../../types/product';
+// import { Subcategory } from '../../../../types/category';
+
+// export default async function SingleProductPage({ params }: { params: { slug: string } }) {
+//   const slug = params.slug;
+
+//   const productRes = await fetch(`https://ecom-testing.up.railway.app/product/info/${slug}`, {
+//     cache: 'no-store',
+//   });
+
+//   if (!productRes.ok) return notFound();
+
+//   const product: Product = await productRes.json();
+
+//   const subcategoryRes = await fetch(
+//     `https://ecom-testing.up.railway.app/category/subcategory/${product.subcategory.slug}`,
+//     { cache: 'no-store' }
+//   );
+
+//   if (!subcategoryRes.ok) return notFound();
+
+//   const subcategory: Subcategory = await subcategoryRes.json();
+
+//   return (
+//     <div className="p-6 max-w-7xl mx-auto">
+//       <ProductDetails product={product} subcategory={subcategory} />
+//     </div>
+//   );
+// }
+
+
 import { notFound } from 'next/navigation';
 import ProductDetails from '@/app/components/productDetails/ProductDetails';
 import { Product } from '../../../../types/product';
 import { Subcategory } from '../../../../types/category';
 
-export default async function SingleProductPage({ params }: { params: { slug: string } }) {
-  const slug = params.slug;
+interface PageProps {
+  params: { slug: string };
+}
 
-  const productRes = await fetch(`https://ecom-testing.up.railway.app/product/info/${slug}`, {
+export default async function Page({ params }: PageProps) {
+  const {slug} = await params
+
+  const productRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/product/info/${slug}`, {
     cache: 'no-store',
   });
 
@@ -133,7 +170,7 @@ export default async function SingleProductPage({ params }: { params: { slug: st
   const product: Product = await productRes.json();
 
   const subcategoryRes = await fetch(
-    `https://ecom-testing.up.railway.app/category/subcategory/${product.subcategory.slug}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/category/subcategory/${product.subcategory.slug}`,
     { cache: 'no-store' }
   );
 
