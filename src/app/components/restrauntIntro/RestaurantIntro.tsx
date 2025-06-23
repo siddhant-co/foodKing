@@ -12,7 +12,7 @@ export default function RestaurantIntro() {
           src="/chef.jpg" 
           alt="Chef"
           width={550}
-          height={500}
+          height={300}
           className="rounded-lg object-cover"
         />
       </div>

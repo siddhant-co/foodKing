@@ -63,13 +63,13 @@ export default function Categories() {
             href={`/subcategory/${category.slug}`}
             className="group"
           >
-            <div className="overflow-hidden w-[250px] h-[250px] rounded-2xl">
+            <div className="overflow-hidden w-[250px] h-[150px] rounded">
               <Image
                 src={category.imageUrl}
                 alt={category.name}
                 width={200}
                 height={200}
-                className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110 rounded-2xl"
+                className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110 rounded"
               />
             </div>
             <h2 className="text-lg font-semibold mt-4 text-center group-hover:text-orange-500 transition">
@@ -81,3 +81,5 @@ export default function Categories() {
     </div>
   );
 }
+
+
