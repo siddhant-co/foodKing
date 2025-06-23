@@ -159,7 +159,8 @@ interface PageProps {
 }
 
 export default async function Page({ params }: PageProps) {
-  const {slug} = await params
+  // ✅ FIXED: Removed incorrect "await"
+  const { slug } = params;
 
   const productRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/product/info/${slug}`, {
     cache: 'no-store',
