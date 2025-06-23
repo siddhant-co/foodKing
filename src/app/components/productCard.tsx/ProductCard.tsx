@@ -65,10 +65,12 @@ export default function ProductCard({ product }: ProductCardProps) {
       );
 
       toast.success("Added to cart!");
-    } catch (error: any) {
-      toast.error(error.message || "Failed to add to cart");
-      console.log(error);
-      
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : 'Failed to add to cart';
+    
+      toast.error(errorMessage);
+      console.error(error);
     }
   };
 
@@ -77,17 +79,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       dispatch(removeFromWishlist(product.id));
       toast.success("Removed from wishlist");
     } else {
-      // dispatch(
-      //   addToWishlist({
-      //     id: product.id,
-      //     title: product.name,
-      //     price: displayPrice,
-      //     image: displayImage,
-      //     variantId: selectedVariant?.id ?? null,
-      //     discription :product.description
-      //   })
-      // );
-
+ 
       dispatch(addToWishlist(product));
 
       toast.success("Added to wishlist");

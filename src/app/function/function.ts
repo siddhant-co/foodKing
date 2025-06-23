@@ -160,7 +160,7 @@ export const clearCart = async (token: string) => {
 
 
 export const addToCartApi = async (
-  { productId, quantity, variantId }: { productId: number; quantity: number; variantId?: number | null },
+  { productId, quantity }: { productId: number; quantity: number; variantId?: number | null },
   token: string
 ) => {
   const response = await fetch(`https://ecom-testing.up.railway.app/cart/add`, {

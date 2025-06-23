@@ -74,7 +74,7 @@ export default function ProductDetails({ product, subcategory }: ProductDetailsP
           product: undefined,
           image: selectedVariant?.images?.[0]?.url ?? product.imageUrl,
           price: selectedVariant?.price ?? product.basePrice,
-          variantId: selectedVariant?.id ?? null,
+         variantId: selectedVariant?.id ?? 0,
           item_id: res.id,
         })
       );

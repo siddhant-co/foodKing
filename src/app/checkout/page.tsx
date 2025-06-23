@@ -10,6 +10,8 @@ import toast from 'react-hot-toast';
 import { addAddress, deleteAddress, fetchAddresses, updateAddress } from '../function/function';
 import { RootState } from '../../../store/store';
 
+import Image from 'next/image';
+
 // Address Type
 type Address = {
   id?: number;
@@ -149,8 +151,14 @@ export default function CheckoutPage() {
       toast.success('Order placed successfully');
       console.log('Order placed:', data);
       router.push(`/order-success?id=${data.id}`);
-    } catch (error: any) {
-      toast.error(error.message || 'Something went wrong');
+    } catch (error) {
+      let message = 'Something went wrong';
+    
+      if (error instanceof Error) {
+        message = error.message;
+      }
+    
+      toast.error(message);
       console.error('Order error:', error);
     }
   };
@@ -271,7 +279,7 @@ export default function CheckoutPage() {
             {cartItems.map((item, i) => (
               <li key={i} className="flex justify-between items-center p-2 bg-white rounded-md border border-gray-300 ">
                 <div className="flex items-center gap-4">
-                  <img src={item.image} alt={item.name} className="w-12 h-12 object-cover rounded" />
+                  <Image src={item.image} alt={item.name} className="w-12 h-12 object-cover rounded" />
                   <div>
                     <p className="font-medium text-gray-700">{item.name}</p>
                     <p className="text-gray-500 text-sm">₹{item.basePrice} × {item.quantity}</p>
