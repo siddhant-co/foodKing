@@ -80,8 +80,12 @@ export default function ProductDetails({ product, subcategory }: ProductDetailsP
       );
 
       toast.success("Added to cart!");
-    } catch (error: any) {
-      toast.error(error.message || "Failed to add to cart");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message || "Failed to add to cart");
+      } else {
+        toast.error("Failed to add to cart");
+      }
       console.log(error);
     }
   };

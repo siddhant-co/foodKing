@@ -217,19 +217,19 @@ export async function addAddress(token: string, body: {
   return res.json();
 }
 
-export async function updateAddress(token: string, id: number, body: object): Promise<any> {
-  const res = await fetch(`https://ecom-testing.up.railway.app/address/${id}`, {
-    method: 'PATCH',
-    headers: {
-      'Authorization': `Token ${token}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body),
-  });
+  export async function updateAddress(token: string, id: number, body:  Partial<Address>): Promise<Address> {
+    const res = await fetch(`https://ecom-testing.up.railway.app/address/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Token ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
 
-  if (!res.ok) throw new Error('Failed to update address');
-  return res.json();
-}
+    if (!res.ok) throw new Error('Failed to update address');
+    return res.json();
+  }
 
 
 export async function deleteAddress(token: string, id: number): Promise<void> {
