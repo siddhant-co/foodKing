@@ -74,21 +74,54 @@
 
 //
 
+// import { notFound } from 'next/navigation';
+// import ProductDetails from '@/app/components/productDetails/ProductDetails';
+// import { Product } from '../../../../types/product';
+// import { Subcategory } from '../../../../types/category';
+
+// interface ProductPageProps {
+//   params: { slug: string };
+// }
+
+// export default async function SingleProductPage(props: ProductPageProps) {
+//   return await renderProductPage(props);
+// }
+
+// // ✅ This avoids triggering the Next.js 15.3 bug
+// async function renderProductPage({ params }: ProductPageProps) {
+//   const slug = params.slug;
+
+//   const productRes = await fetch(`https://ecom-testing.up.railway.app/product/info/${slug}`, {
+//     cache: 'no-store',
+//   });
+
+//   if (!productRes.ok) return notFound();
+
+//   const product: Product = await productRes.json();
+
+//   const subcategoryRes = await fetch(
+//     `https://ecom-testing.up.railway.app/category/subcategory/${product.subcategory.slug}`,
+//     { cache: 'no-store' }
+//   );
+
+//   if (!subcategoryRes.ok) return notFound();
+
+//   const subcategory: Subcategory = await subcategoryRes.json();
+
+//   return (
+//     <div className="p-6 max-w-7xl mx-auto">
+//       <ProductDetails product={product} subcategory={subcategory} />
+//     </div>
+//   );
+// }
+
+
 import { notFound } from 'next/navigation';
 import ProductDetails from '@/app/components/productDetails/ProductDetails';
 import { Product } from '../../../../types/product';
 import { Subcategory } from '../../../../types/category';
 
-interface ProductPageProps {
-  params: { slug: string };
-}
-
-export default async function SingleProductPage(props: ProductPageProps) {
-  return await renderProductPage(props);
-}
-
-// ✅ This avoids triggering the Next.js 15.3 bug
-async function renderProductPage({ params }: ProductPageProps) {
+export default async function SingleProductPage({ params }: { params: { slug: string } }) {
   const slug = params.slug;
 
   const productRes = await fetch(`https://ecom-testing.up.railway.app/product/info/${slug}`, {

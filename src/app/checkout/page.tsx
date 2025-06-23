@@ -271,7 +271,7 @@ export default function CheckoutPage() {
         </div>
 
       <div className="space-y-6">
-        <div className="bg-white shadow-lg p-6 rounded-2xl">
+        {/* <div className="bg-white shadow-lg p-6 rounded-2xl">
           <h2 className="text-2xl font-bold mb-4 text-[#e7000b] border-b-2 border-blue-100 pb-2 flex items-center gap-2">
             🛒 <span>Cart Items</span>
           </h2>
@@ -279,7 +279,7 @@ export default function CheckoutPage() {
             {cartItems.map((item, i) => (
               <li key={i} className="flex justify-between items-center p-2 bg-white rounded-md border border-gray-300 ">
                 <div className="flex items-center gap-4">
-                  <Image src={item.image} alt={item.name} className="w-12 h-12 object-cover rounded" />
+                  <img src={item.image} alt={item.name} className="w-12 h-12 object-cover rounded" />
                   <div>
                     <p className="font-medium text-gray-700">{item.name}</p>
                     <p className="text-gray-500 text-sm">₹{item.basePrice} × {item.quantity}</p>
@@ -289,8 +289,34 @@ export default function CheckoutPage() {
               </li>
             ))}
           </ul>
-        </div>
+        </div> */}
 
+        
+<div className="bg-white shadow-lg p-6 rounded-2xl">
+  <h2 className="text-2xl font-bold mb-4 text-[#e7000b] border-b-2 border-blue-100 pb-2 flex items-center gap-2">
+    🛒 <span>Cart Items</span>
+  </h2>
+  <ul className="space-y-3 max-h-64 overflow-y-auto">
+    {cartItems.map((item, i) => (
+      <li key={i} className="flex justify-between items-center p-2 bg-white rounded-md border border-gray-300">
+        <div className="flex items-center gap-4">
+          <Image
+            src={item.image}
+            alt={item.name}
+            width={48}
+            height={38}
+            className="object-cover rounded w-12 h-12"
+          />
+          <div>
+            <p className="font-medium text-gray-700">{item.name}</p>
+            <p className="text-gray-500 text-sm">₹{item.basePrice} × {item.quantity}</p>
+          </div>
+        </div>
+        <span className="font-bold text-green-600">₹{item.basePrice * item.quantity}</span>
+      </li>
+    ))}
+  </ul>
+</div>
         <div className="bg-white shadow-lg p-6 rounded-2xl">
           <h2 className="text-2xl font-bold mb-6 text-[#e7000b] border-b-2 border-indigo-200 pb-2 flex items-center gap-2">
             📦 <span>Order Summary</span>
