@@ -1,6 +1,6 @@
 import { Category } from "../../../types/category";
-import { Product } from "../../../types/product";
-import { Testimonial } from "../../../types/testimonials";
+import { Product, Subcategory } from "../../../types/product";
+
 
 export async function fetchBanners() {
   try {
@@ -24,8 +24,8 @@ export async function fetchBanners() {
     }
 
     return data;
-  } catch (error: any) {
-    console.error("Failed to fetch banners:", error.message || error);
+  } catch (error: unknown) {
+    console.error("Failed to fetch banners:", (error as Error).message);
     return []; // Safe fallback
   }
 }
@@ -57,69 +57,52 @@ export async function fetchProducts(page: number = 1, limit: number = 6): Promis
     }
 
     return data.data as Product[]; // Type assertion for safety
-  } catch (error: any) {
-    console.error('Failed to fetch products:', error.message || error);
+  } catch (error: unknown) {
+    console.error('Failed to fetch products:', (error as Error).message);
     return [];
   }
 }
 
 // category
-
 export async function fetchCategories(): Promise<Category[]> {
   try {
     const res = await fetch(`https://ecom-testing.up.railway.app/category/subcategory`, {
-      
       cache: 'no-store',
     });
-    console.log(res);
-    
 
-    if (!res.ok) {
-      throw new Error('Failed to fetch categories');
-    }
-
-    return res.json();
-  } catch (error) {
-    console.error('Error fetching categories:', error);
+    if (!res.ok) throw new Error('Failed to fetch categories');
+    return await res.json(); // Add `await`
+  } catch (error: unknown) {
+    console.error('Error fetching categories:', (error as Error).message);
     return [];
   }
 }
 
 
 
-export async function fetchSubcategoryBySlug(slug: string) {
+export async function fetchSubcategoryBySlug(slug: string): Promise<Subcategory | null> {
   const res = await fetch(`https://ecom-testing.up.railway.app/category/subcategory/${slug}`, {
     cache: 'no-store',
   });
+
   if (!res.ok) return null;
   return res.json();
 }
 
 
-// Testimonials
 
-// export async function getTestimonials(): Promise<Testimonial[]> {
-//   const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/frontend/testimonials/`, {
-//     cache: 'no-store',
-//   });
- 
-//   if (!res.ok) {
-//     throw new Error('Failed to fetch testimonials');
-//   }
- 
-//   const data = await res.json();
-//   return data.testimonials;
-// }
 
-// single-product-page
 
-export async function fetchProductBySlug(slug: string) {
+export async function fetchProductBySlug(slug: string): Promise<Product | null> {
   try {
-    const res = await fetch(`https://ecom-testing.up.railway.app/product/info/${slug}`, { cache: 'no-store' });
+    const res = await fetch(`https://ecom-testing.up.railway.app/product/info/${slug}`, {
+      cache: 'no-store',
+    });
+
     if (!res.ok) throw new Error('Failed to fetch product');
     return await res.json();
-  } catch (error) {
-    console.error(error);
+  } catch (error: unknown) {
+    console.error((error as Error).message);
     return null;
   }
 }
@@ -234,7 +217,7 @@ export async function addAddress(token: string, body: {
   return res.json();
 }
 
-export async function updateAddress(token: string, id: number, body: any) {
+export async function updateAddress(token: string, id: number, body: object): Promise<any> {
   const res = await fetch(`https://ecom-testing.up.railway.app/address/${id}`, {
     method: 'PATCH',
     headers: {
@@ -243,20 +226,19 @@ export async function updateAddress(token: string, id: number, body: any) {
     },
     body: JSON.stringify(body),
   });
+
   if (!res.ok) throw new Error('Failed to update address');
   return res.json();
 }
 
-export async function deleteAddress(token: string, id: number) {
+
+export async function deleteAddress(token: string, id: number): Promise<void> {
   const res = await fetch(`https://ecom-testing.up.railway.app/address/${id}`, {
     method: 'DELETE',
-    headers: {
-      'Authorization': `Token ${token}`,
-    },
+    headers: { 'Authorization': `Token ${token}` },
   });
 
-  const data = await res.json().catch(() => null); // avoid crash on empty body
-
+  const data = await res.json().catch(() => null);
   if (!res.ok) {
     console.error("Delete failed:", res.status, data);
     throw new Error(data?.message || 'Failed to delete address');

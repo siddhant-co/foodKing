@@ -3,9 +3,10 @@
 
 import { fetchProducts } from '@/app/function/function';
 import ProductCard from '../components/productCard.tsx/ProductCard';
-import { motion } from 'framer-motion';
 import AnimatedHeading from '../components/animatedHeading/AnimatedHeading';
 import Link from 'next/link';
+import { Product } from '../../../types/product';
+
 
 export default async function ProductsPage() {
   const products = await fetchProducts(1,10 );
@@ -20,7 +21,7 @@ export default async function ProductsPage() {
      <AnimatedHeading text="POPULAR FOOD ITEMS" />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 ">
-        {products.map((product: any) => (
+        {products.map((product: Product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
